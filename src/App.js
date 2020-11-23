@@ -1,23 +1,14 @@
-import logo from './logo.svg';
+import Questions from "./Components/Questions/Questions"
+import { Link } from "react-router-dom"
 import './App.css';
 
-function App() {
+
+function App(props) {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Welcome to the Quiz</h1>
+      <Link to='/userData'>See your previous results(if any)</Link>
+      <Questions propsData={props}/>
     </div>
   );
 }

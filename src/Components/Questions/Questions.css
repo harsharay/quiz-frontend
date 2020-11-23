@@ -1,0 +1,30 @@
+.questions-block {
+    height: 80vh;
+    margin: 10px;
+}
+
+.questions-grid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.question {
+    width: 100%;
+    border: 2px solid blue;
+}
+
+.submitButton {
+    margin: 5vh;
+    width: 10vw;
+    background-color: #d72483;
+    color: white;
+    padding: 7px;
+    font-size: large;
+    font-weight: 700;
+    border-radius: 12px;
+    outline: none;
+    border: 2px solid #d72483;
+    cursor: pointer;
+}
