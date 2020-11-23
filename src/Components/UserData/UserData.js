@@ -29,11 +29,13 @@ const UserData = () => {
     }
 
     return (
-        <div>
-            <h1>UserData</h1>
-            <p>Search your user name to see tour previous results(if any)</p>
-            <input type="text" placeholder="type here" value={username} onChange={handleUsernameChange}/>
-            <button onClick={handleSubmitClick}>Submit</button>
+        <div className="userData-block">
+            <div className="test-title">
+                <h1>UserData</h1>
+                <p>Search your user name to see tour previous results(if any)</p>
+                <input type="text" placeholder="type here" value={username} onChange={handleUsernameChange}/>
+                <button onClick={handleSubmitClick}>Submit</button>
+            </div>
             {loading && <h1>Loading...</h1>}
             { dataReceived && 
             <div>
@@ -43,11 +45,11 @@ const UserData = () => {
                         return (
                         <React.Fragment key={index}>
                             <hr/>
-                            <h3>Test {index+1}</h3>
+                            <h3 className="test-title">Test {index+1} Score: <span className="score">{item.score}</span></h3>
                             { item.data.map((i, ind) => {
                                 return (
                                 <React.Fragment key={ind}>
-                                    <h2>{i.question}</h2>
+                                    <h3>{i.question}</h3>
                                     <p>Your answer: {i.correctAnswer}</p>
                                     <p>Actual answer: {item.userAnswers[i.questionId]}</p>
                                 </React.Fragment>

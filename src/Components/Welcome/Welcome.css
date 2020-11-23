@@ -1,0 +1,11 @@
+.welcome-block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.welcome-login-block {
+    padding: 15px;
+}

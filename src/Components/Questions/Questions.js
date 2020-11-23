@@ -4,41 +4,43 @@ import "./Questions.css"
 import { GET_QUESTIONS, SAVE_FORM_DATA } from "../../constants"
 
 
-const Questions = ({ propsData }) => {
+const Questions = (props) => {
 
-    const [username, setUsername] = useState("")
+    // const [username, setUsername] = useState("")
     const [data, setData] = useState([])
     // const [questions, setQuestions] = useState([])
     const [actualAnswers, setActualAnswers] = useState([])
     const [userAnswers, setUserAnswers] = useState({})
     const [finalScore, setFinalScore] = useState(0)
     const [testFinished, setTestFinished] = useState(false)
+    const [error, setError] = useState(false)
 
     useEffect(() => {
-        fetch(GET_QUESTIONS)
-        .then(data => data.json())
-        .then(json => {
-            setData([...json])
-            json.forEach(item => {
-                return (
-                    setActualAnswers(prevValue => {
-                        return {
-                            ...prevValue,
-                            [item.questionId] : {
-                                correctAnswer : item.correctAnswer, 
-                                marks: item.marks
+        if(props.propsData.location.username){
+            fetch(GET_QUESTIONS)
+            .then(data => data.json())
+            .then(json => {
+                setData([...json])
+                json.forEach(item => {
+                    return (
+                        setActualAnswers(prevValue => {
+                            return {
+                                ...prevValue,
+                                [item.questionId] : {
+                                    correctAnswer : item.correctAnswer, 
+                                    marks: item.marks
+                                }
                             }
-                        }
-                    })
-                )
+                        })
+                    )
+                })
             })
-        })
-    },[])
+        } else {
+            setError(true)
+        }
+        
+    },[props])
 
-    const handleUserNameChange = e => {
-        let name = e.target.value
-        setUsername(name.toLowerCase())
-    }
 
     const handleRadioChange = e => {
         let value = e.target.value
@@ -71,45 +73,42 @@ const Questions = ({ propsData }) => {
         setTestFinished(true)
 
         //Calling the POST API
-        fetch(SAVE_FORM_DATA, {
-            method: 'POST',
-            body: JSON.stringify({
-                username,
+            fetch(SAVE_FORM_DATA, {
+                method: 'POST',
+                body: JSON.stringify({
+                    username : props.propsData.location.username,
+                    score,
+                    userAnswers,
+                    data
+                }),
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+            })
+            .then(data => data.json())
+            .then(json => console.log(json))
+    
+    
+            props.propsData.history.push({
+                pathname : "/result",
+                username : props.propsData.location.username,
                 score,
                 userAnswers,
                 data
-            }),
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-        })
-        .then(data => data.json())
-        .then(json => console.log(json))
-
-
-        propsData.history.push({
-            pathname : "/result",
-            username,
-            score,
-            userAnswers,
-            data
-        })
-
+            })
         
     }
 
     return (
         <div className="questions-block">
-            <p>Questions</p>
-            <p>Enter your userName</p>
             
-            <form className="questions-grid" onSubmit={handleSubmit}>
-                <input type="text" placeholder="type here" id="username" onChange={handleUserNameChange} value={username} required/>
+            {!error ? 
+                <form className="questions-grid" onSubmit={handleSubmit}>
                 { data && data.map((item,index) => {
                     return (
                         <div key={index} className='question'>
-                            <h1>{item.question}</h1>
+                            <h1>{index+1}: {item.question}</h1>
                             { item.options.map((i, ind) => {
                                 return (
                                     <div key={ind}>
@@ -123,6 +122,8 @@ const Questions = ({ propsData }) => {
                 }) }
                 { !testFinished && <button type="submit" className="submitButton">Submit</button>}
             </form>
+            :
+            <h1>Cant take the test without username, go back to login page</h1>}
         </div>
     )
 }

@@ -12,7 +12,14 @@
 
 .question {
     width: 100%;
-    border: 2px solid blue;
+    border-bottom: 2px solid #b2ffa8;
+    text-align: left;
+    padding: 10px;
+    margin-left: 50px;
+    -webkit-box-shadow: 0px 0px 10px -2px #b2ffa8;
+    -moz-box-shadow: 0px 0px 10px -2px #b2ffa8;
+    box-shadow: 0px 0px 10px -2px #b2ffa8;
+    border-radius: 12px;
 }
 
 .submitButton {

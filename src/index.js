@@ -8,12 +8,14 @@ import App from './App';
 import Results from "./Components/Results/Results";
 import UserData from "./Components/UserData/UserData"
 import reportWebVitals from './reportWebVitals';
+import Welcome from './Components/Welcome/Welcome';
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <Switch>
-        <Route path='/' component={App} exact/>
+        <Route path='/' component={Welcome} exact/>
+        <Route path='/questions' component={App} exact/>
         <Route path='/result' component={Results} exact/>
         <Route path='/userData' component={UserData} exact/>
       </Switch>
